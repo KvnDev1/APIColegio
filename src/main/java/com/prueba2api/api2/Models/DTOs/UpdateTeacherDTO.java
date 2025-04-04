@@ -11,11 +11,8 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class UpdateTeacherDTO {
 
-    @NotBlank(message = "El nombre es obligatorio")
-    private String name;
-
-    @NotBlank(message = "El apellido es obligatorio")
-    private String lastName;
+    @NotBlank(message = "El nombre completo es obligatorio")
+    private String teacherName;
 
     @NotBlank(message = "El correo es obligatorio")
     @Email(message = "El correo no es válido")
