@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
 import java.util.UUID;
 
 @Data
@@ -23,8 +24,9 @@ public class Course {
     @NotBlank(message = "La descripción del curso es obligatoria")
     private String description;
 
-    // Cada curso es impartido por un profesor
-    @ManyToOne(optional = false)
-    @JoinColumn(name = "teacher_id", nullable = false)
+    // Relacion curso es impartido por un profesor
+    @ManyToOne(optional = true)
+    @JoinColumn(name = "teacher_id", nullable = true)
     private Teacher teacher;
+
 }

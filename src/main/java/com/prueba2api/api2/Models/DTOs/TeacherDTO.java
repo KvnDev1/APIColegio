@@ -6,6 +6,8 @@ import jakarta.validation.constraints.Email;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
+
+import java.util.Set;
 import java.util.UUID;
 
 @Data
@@ -21,13 +23,14 @@ public class TeacherDTO {
     )
     private String rut;
     
-    @NotBlank(message = "El nombre es obligatorio")
-    private String name;
-    
-    @NotBlank(message = "El apellido es obligatorio")
-    private String lastName;
+    @NotBlank(message = "El nombre completo es obligatorio")
+    private String teacherName;
     
     @NotBlank(message = "El correo es obligatorio")
     @Email(message = "El correo no es válido")
     private String email;
+
+    // Se mostrara que cursos imparte el profesor
+    private Set<UUID> courseIds;
+    private Set<String> courseNames;
 }

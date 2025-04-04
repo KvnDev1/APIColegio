@@ -17,7 +17,7 @@ import com.prueba2api.api2.Service.StudentService;
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping("/colegio")
+@RequestMapping("/colegio/estudiantes")
 public class StudentController {
 
     private final StudentService studentService;
@@ -27,15 +27,15 @@ public class StudentController {
         this.studentService = studentService;
     }
     
-    // GET: Obtener todos los estudiantes
-    @GetMapping("/estudiantes")
+    // GET ALL: Obtener todos los estudiantes
+    @GetMapping("/todos")
     public ResponseEntity<List<StudentDTO>> getAllStudents() {
         List<StudentDTO> students = studentService.getAllStudents();
         return ResponseEntity.ok(students);
     }
     
     // GET: Obtener un estudiante por ID
-    @GetMapping("/estudiante/{rut}")
+    @GetMapping("/buscarRut/{rut}")
     public ResponseEntity<?> getByRut(@PathVariable String rut) {
         Optional<StudentDTO> student = studentService.getStudentByRut(rut);
         if (student.isPresent()) {
@@ -47,7 +47,7 @@ public class StudentController {
     }
     
     // PUT: Actualizar un estudiante, solo se puede modificar el nombre y apellido
-    @PutMapping("/actualizarEstudiante/{studentId}")
+    @PutMapping("/actualizar/{studentId}")
     public ResponseEntity<?> updateStudent(@PathVariable UUID studentId, @RequestBody @Valid UpdateStudentDTO updateDto) {
         Optional<StudentDTO> existingStudent = studentService.getStudent(studentId);
         if (existingStudent.isPresent()) {
@@ -65,7 +65,7 @@ public class StudentController {
     }
     
     // POST: Crear un nuevo estudiante
-    @PostMapping("/crearEstudiante")
+    @PostMapping("/crear")
 public ResponseEntity<?> createStudent(@RequestBody @Valid CreateStudentDTO createDto) {
     // Verificar si ya existe un estudiante con el mismo RUT
     Optional<StudentDTO> existingStudent = studentService.getStudentByRut(createDto.getRut());
@@ -91,12 +91,11 @@ public ResponseEntity<?> createStudent(@RequestBody @Valid CreateStudentDTO crea
             ));
 }
 
-    
-    
     // DELETE: Eliminar un estudiante por ID
-    @DeleteMapping("/delete/{studentId}")
+    @DeleteMapping("/eliminar/{studentId}")
     public ResponseEntity<?> deleteStudent(@PathVariable UUID studentId) {
         studentService.delete(studentId);
         return ResponseEntity.ok(Map.of("message", "Estudiante eliminado exitosamente!"));
     }
+
 }

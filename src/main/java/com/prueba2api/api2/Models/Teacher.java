@@ -26,17 +26,13 @@ public class Teacher {
 
     @Column(nullable = false)
     @NotBlank(message = "El nombre es obligatorio")
-    private String name;
-
-    @Column(nullable = false)
-    @NotBlank(message = "El apellido es obligatorio")
-    private String lastName;
+    private String teacherName;
 
     @Column(nullable = false, unique = true)
     @NotBlank(message = "El correo es obligatorio")
     private String email;
 
     // Relación: un profesor imparte varios cursos
-    @OneToMany(mappedBy = "teacher", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "teacher", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private List<Course> courses;
 }

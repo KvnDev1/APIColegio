@@ -17,11 +17,8 @@ public class CreateTeacherDTO {
              message = "El RUT debe tener formato XX.XXX.XXX-X")
     private String rut;
 
-    @NotBlank(message = "El nombre es obligatorio")
-    private String name;
-
-    @NotBlank(message = "El apellido es obligatorio")
-    private String lastName;
+    @NotBlank(message = "El nombre completo es obligatorio")
+    private String teacherName;
 
     @NotBlank(message = "El correo es obligatorio")
     @Email(message = "El correo no es válido")

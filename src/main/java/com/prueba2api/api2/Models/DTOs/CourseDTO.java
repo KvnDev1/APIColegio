@@ -19,4 +19,5 @@ public class CourseDTO {
     
     // Referencia al profesor que esta asignado en el curso
     private UUID teacherId;
+    private String teacherName;
 }

@@ -1,6 +1,7 @@
 package com.prueba2api.api2.Models.DTOs;
 
 import java.time.LocalDateTime;
+import java.util.Set;
 import java.util.UUID;
 
 import jakarta.validation.constraints.NotBlank;
@@ -28,4 +29,8 @@ public class StudentDTO {
     private String lastName;
 
     private LocalDateTime createdAt;
+
+    //Se mostrara en que curso esta inscrito el estudiante
+    private Set<UUID> courseIds;
+    private Set<String> courseNames;
 }
