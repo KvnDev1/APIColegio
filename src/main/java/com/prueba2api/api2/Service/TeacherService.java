@@ -1,7 +1,9 @@
 package com.prueba2api.api2.Service;
 
 import com.prueba2api.api2.Models.Teacher;
+import com.prueba2api.api2.Models.DTOs.CreateTeacherDTO;
 import com.prueba2api.api2.Models.DTOs.TeacherDTO;
+import com.prueba2api.api2.Models.DTOs.UpdateTeacherDTO;
 import com.prueba2api.api2.Mappers.TeacherMapper;
 import com.prueba2api.api2.Repository.TeacherRepository;
 import org.springframework.stereotype.Service;
@@ -42,11 +44,25 @@ public class TeacherService {
                 .map(teacherMapper::toDTO);
     }
 
-    // Guarda o actualiza un profesor a partir de TeacherDTO y retorna el objeto guardado en forma de DTO
-    public TeacherDTO saveOrUpdate(TeacherDTO teacherDTO) {
-        Teacher teacher = teacherMapper.toEntity(teacherDTO);
+    // Crear un profesor a partir de CreateTeacherDTO
+    public TeacherDTO createTeacher(CreateTeacherDTO createTeacherDTO) {
+        Teacher teacher = teacherMapper.toEntity(createTeacherDTO);
         Teacher savedTeacher = teacherRepository.save(teacher);
         return teacherMapper.toDTO(savedTeacher);
+    }
+
+     // Actualizar un profesor a partir de UpdateTeacherDTO
+    public Optional<TeacherDTO> updateTeacher(UUID teacherId, UpdateTeacherDTO updateTeacherDTO) {
+        Optional<Teacher> teacherOpt = teacherRepository.findById(teacherId);
+        if (teacherOpt.isPresent()) {
+            Teacher teacherToUpdate = teacherOpt.get();
+            // Actualizar los campos modificables name, lastname y email (ignorando rut)
+            teacherToUpdate.setTeacherName(updateTeacherDTO.getTeacherName());
+            teacherToUpdate.setEmail(updateTeacherDTO.getEmail());
+            Teacher updatedTeacher = teacherRepository.save(teacherToUpdate);
+            return Optional.of(teacherMapper.toDTO(updatedTeacher));
+        }
+        return Optional.empty();
     }
 
     // Elimina un profesor por UUID
