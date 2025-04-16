@@ -27,14 +27,14 @@ public class StudentController {
         this.studentService = studentService;
     }
     
-    // GET ALL: Obtener todos los estudiantes
+    // GET ALL Obtener todos los estudiantes
     @GetMapping("/todos")
     public ResponseEntity<List<StudentDTO>> getAllStudents() {
         List<StudentDTO> students = studentService.getAllStudents();
         return ResponseEntity.ok(students);
     }
     
-    // GET: Obtener un estudiante por ID
+    // GET estudiante por RUT
     @GetMapping("/buscarRut/{rut}")
     public ResponseEntity<?> getByRut(@PathVariable String rut) {
         Optional<StudentDTO> student = studentService.getStudentByRut(rut);
@@ -46,7 +46,7 @@ public class StudentController {
         }
     }
     
-    // PUT: Actualizar un estudiante, solo se puede modificar el nombre y apellido
+    // PUT actualizar un estudiante por UUID
     @PutMapping("/actualizar/{studentId}")
     public ResponseEntity<?> updateStudent(@PathVariable UUID studentId, @RequestBody @Valid UpdateStudentDTO updateDto) {
         Optional<StudentDTO> existingStudent = studentService.getStudent(studentId);
@@ -64,7 +64,7 @@ public class StudentController {
         }
     }
     
-    // POST: Crear un nuevo estudiante
+    // POST crear nuevo estudiante
     @PostMapping("/crear")
 public ResponseEntity<?> createStudent(@RequestBody @Valid CreateStudentDTO createDto) {
     // Verificar si ya existe un estudiante con el mismo RUT
@@ -91,7 +91,7 @@ public ResponseEntity<?> createStudent(@RequestBody @Valid CreateStudentDTO crea
             ));
 }
 
-    // DELETE: Eliminar un estudiante por ID
+    // DELETE eliminar estudiante por UUID
     @DeleteMapping("/eliminar/{studentId}")
     public ResponseEntity<?> deleteStudent(@PathVariable UUID studentId) {
         studentService.delete(studentId);

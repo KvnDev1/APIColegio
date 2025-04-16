@@ -3,6 +3,8 @@ package com.prueba2api.api2.Controller;
 import com.prueba2api.api2.Models.DTOs.EnrollmentDTO;
 import com.prueba2api.api2.Service.EnrollmentService;
 import jakarta.validation.Valid;
+
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,16 +21,23 @@ public class EnrollmentController {
         this.enrollmentService = enrollmentService;
     }
 
-    // Endpoint para inscribir a un estudiante en un curso
+    // POST Crear nueva inscripción
     @PostMapping("/crear")
-    public ResponseEntity<EnrollmentDTO> enrollStudent(@RequestBody @Valid Map<String, UUID> payload) {
+    public ResponseEntity<?> enrollStudent(@RequestBody @Valid Map<String, UUID> payload) {
         UUID studentId = payload.get("studentId");
         UUID courseId = payload.get("courseId");
         EnrollmentDTO enrollmentDTO = enrollmentService.enrollStudent(studentId, courseId);
-        return ResponseEntity.ok(enrollmentDTO);
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(Map.of(
+                        "message", "Inscripcion creada exitosamente!",
+                        "enrollmentId", enrollmentDTO.getEnrollmentId().toString(),
+                        "studentId", enrollmentDTO.getStudentId().toString(),
+                        "courseId", enrollmentDTO.getCourseId().toString(),
+                        "enrollmentDate", enrollmentDTO.getEnrollmentDate().toString()
+                ));
     }
 
-    // Endpoint para obtener las inscripciones de un estudiante
+    // GET Inscripción por UUID de Estudiante
     @GetMapping("/estudiante/{studentId}")
     public ResponseEntity<?> getEnrollmentsByStudent(@PathVariable UUID studentId) {
         return ResponseEntity.ok(enrollmentService.getEnrollmentsByStudent(studentId));
