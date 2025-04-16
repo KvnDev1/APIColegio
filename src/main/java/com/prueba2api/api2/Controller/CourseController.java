@@ -24,14 +24,14 @@ public class CourseController {
         this.courseService = courseService;
     }
 
-    // GET: Obtener todos los cursos
+    // GET todos los cursos
     @GetMapping("/todos")
     public ResponseEntity<List<CourseDTO>> getAllCourses() {
         List<CourseDTO> courses = courseService.getAllCourses();
         return ResponseEntity.ok(courses);
     }
 
-    // GET: Obtener un curso por UUID
+    // GET curso por UUID
     @GetMapping("/cursoId/{courseId}")
     public ResponseEntity<?> getCourseById(@PathVariable UUID courseId) {
         Optional<CourseDTO> courseOpt = courseService.getCourseById(courseId);
@@ -43,7 +43,7 @@ public class CourseController {
         }
     }
 
-    // POST: Crear un nuevo curso usando CreateCourseDTO
+    // POST Crear nuevo curso
     @PostMapping("/crear")
     public ResponseEntity<?> createCourse(@RequestBody @Valid CreateCourseDTO createCourseDTO) {
         CourseDTO savedCourse = courseService.createCourse(createCourseDTO);
@@ -53,7 +53,7 @@ public class CourseController {
                              "courseName", savedCourse.getCourseName()));
     }
 
-    // PUT: Actualizar un curso usando UpdateCourseDTO
+    // PUT Actualizar un curso por UUID
     @PutMapping("/actualizar/{courseId}")
     public ResponseEntity<?> updateCourse(@PathVariable UUID courseId,
                                           @RequestBody @Valid UpdateCourseDTO updateCourseDTO) {
@@ -67,7 +67,7 @@ public class CourseController {
         }
     }
 
-    // DELETE: Eliminar un curso por UUID
+    // DELETE Eliminar curso por UUID
     @DeleteMapping("/eliminar/{courseId}")
     public ResponseEntity<?> deleteCourse(@PathVariable UUID courseId) {
         courseService.delete(courseId);

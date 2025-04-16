@@ -24,14 +24,14 @@ public class TeacherController {
         this.teacherService = teacherService;
     }
 
-    // GET: Obtener todos los profesores
+    // GET ALL Obtener todos los profesores
     @GetMapping("/todos")
     public ResponseEntity<List<TeacherDTO>> getAllTeachers() {
         List<TeacherDTO> teachers = teacherService.getAllTeachers();
         return ResponseEntity.ok(teachers);
     }
 
-    // GET: Obtener un profesor por UUID
+    // GET profesor por UUID
     @GetMapping("/buscarId/{teacherId}")
     public ResponseEntity<?> getTeacherById(@PathVariable UUID teacherId) {
         Optional<TeacherDTO> teacherOpt = teacherService.getTeacherById(teacherId);
@@ -43,7 +43,7 @@ public class TeacherController {
         }
     }
 
-    // GET: Obtener un profesor por RUT
+    // GET profesor por RUT
     @GetMapping("/buscarRut/{rut}")
     public ResponseEntity<?> getTeacherByRut(@PathVariable String rut) {
         Optional<TeacherDTO> teacherOpt = teacherService.getTeacherByRut(rut);
@@ -55,7 +55,7 @@ public class TeacherController {
         }
     }
 
-    // POST: Crear un nuevo profesor usando CreateTeacherDTO
+    // POST crear nuevo profesor
     @PostMapping("/crear")
     public ResponseEntity<?> createTeacher(@RequestBody @Valid CreateTeacherDTO createTeacherDTO) {
         TeacherDTO savedTeacher = teacherService.createTeacher(createTeacherDTO);
@@ -65,7 +65,7 @@ public class TeacherController {
                              "rut", savedTeacher.getRut()));
     }
 
-    // PUT: Actualizar un profesor usando UpdateTeacherDTO
+    // PUT actualizar un profesor por UUID
     @PutMapping("/actualizar/{teacherId}")
     public ResponseEntity<?> updateTeacher(@PathVariable UUID teacherId,
                                            @RequestBody @Valid UpdateTeacherDTO updateTeacherDTO) {
@@ -79,7 +79,7 @@ public class TeacherController {
         }
     }
 
-    // DELETE: Eliminar un profesor por UUID
+    // DELETE eliminar profesor por UUID
     @DeleteMapping("/eliminar/{teacherId}")
     public ResponseEntity<?> deleteTeacher(@PathVariable UUID teacherId) {
         teacherService.delete(teacherId);
